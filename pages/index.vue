@@ -1,10 +1,6 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
-      <v-card class="logo py-4 d-flex justify-center">
-        <NuxtLogo />
-        <VuetifyLogo />
-      </v-card>
       <v-card
         v-for="citation in citations"
         v-bind:key="citation.id">
@@ -12,8 +8,8 @@
           #{{citation.id}}
         </v-card-title>
         <v-card-text>
-          <p>{{citation.quote}}</p>
-          <small>{{citation.date}}</small>
+          <p style="white-space: pre-wrap;">{{citation.quote}}</p>
+          <small>{{citation.date + (citation.vieille ? ' - ' : '')}}<i v-if="citation.vieille">archive dirobash.tolarian.com, 2008-2020</i></small>
         </v-card-text>
       </v-card>
     </v-col>
@@ -22,11 +18,12 @@
         v-show="montrer_bouton"
         color="pink"
         dark
-        absolute
+        fixed
         bottom
         right
         fab
-        style="margin: 2em; margin-bottom: 3em;"
+        large
+        style="margin: 2em;"
         v-on:click="montrer_bouton=!montrer_bouton; redirigerAjout();"
       >
         <v-icon>mdi-plus</v-icon>
@@ -41,6 +38,12 @@ export default {
 
   css:['~/assets/main.css'],
 
+  transition(to, from) {
+    if (!from) return "slide-left";
+    if (to.query.page != 0)
+      return to.query.page < from.query.page ? "slide-right" : "slide-left";
+  },
+
   data() {
     return {
       montrer_bouton:true
@@ -49,13 +52,20 @@ export default {
   
   methods: {
     redirigerAjout(){
-      this.$router.push('/inspire')
+      this.$router.push('/new')
     }
   },
   
   computed: {
     citations(){
-      return this.$store.state.citations.liste;
+      /**copy array, reverse the result, concat, return result*/
+      return this.$store.state.citations.vieillesCitations
+        .slice()
+        .concat(
+          /**copy array, reverse the result*/
+          this.$store.state.citations.nouvellesCitations
+          .slice()
+        ).reverse();
     }
   }
 }

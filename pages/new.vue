@@ -18,12 +18,14 @@
 import { mapMutations } from 'vuex';
 
 export default {
-  name: 'InspirePage',
+  name: 'newQuotePage',
 
   css:['~/assets/main.css'],
 
   data() {
-    citationUtilisateur: ''
+    return {
+      citationUtilisateur: ''
+    }
   },
   
   methods: {

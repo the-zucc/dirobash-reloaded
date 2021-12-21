@@ -1,11 +1,21 @@
 import vieillesCitations from '~/old-quotes.json'
+
 const state = () => ({
-    liste: vieillesCitations
+    vieillesCitations: vieillesCitations.map(cit => {
+        cit.vieille = true;
+        return cit;
+    }),
+    nouvellesCitations: [],
+    dernierId: Math.max(vieillesCitations.map(cit => cit.id))
 })
 
 const mutations = {
     addCitation(state, citation){
-        state.liste.push(citation);
+        state.nouvellesCitations.push({
+            quote:citation,
+            id: ++state.dernierId,
+            date: new Date().toISOString()
+        });
     }
 }
 

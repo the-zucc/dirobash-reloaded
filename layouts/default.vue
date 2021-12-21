@@ -2,10 +2,10 @@
   <v-app>
     <v-navigation-drawer
       v-model="drawer"
-      :mini-variant="miniVariant"
       :clipped="clipped"
       fixed
       app
+      disable-resize-watcher
     >
       <v-list>
         <v-list-item
@@ -49,7 +49,7 @@
       :absolute="!fixed"
       app
     >
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+      <span>&copy; 2021{{ new Date().getFullYear() == 2021 ? '' : '-'+new Date().getFullYear() }}, Laurier Lavoie-Giasson</span>
     </v-footer>
   </v-app>
 </template>
@@ -62,30 +62,28 @@ export default {
   methods: {
     toggleTheme(){
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark
-    }
+    },
   },
-
   data () {
     return {
-      clipped: false,
       drawer: false,
+      clipped: false,
       fixed: false,
       items: [
         {
-          icon: 'mdi-apps',
-          title: 'Welcome',
+          icon: 'mdi-comment-text-multiple-outline',
+          title: 'Citations',
           to: '/'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
+          icon: 'mdi-comment-plus',
+          title: 'nouvelle citation',
+          to: '/new'
         }
       ],
       miniVariant: false,
       right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
+      title: 'DIRO Bash - Reloaded'
     }
   }
 }
