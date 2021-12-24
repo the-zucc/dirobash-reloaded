@@ -2,7 +2,7 @@
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
       <v-card
-        v-for="citation in citations"
+        v-for="citation in listeCitations"
         v-bind:key="citation.id">
         <v-card-title class="headline">
           #{{citation.id}}
@@ -38,34 +38,20 @@ export default {
 
   css:['~/assets/main.css'],
 
-  transition(to, from) {
-    if (!from) return "slide-left";
-    if (to.query.page != 0)
-      return to.query.page < from.query.page ? "slide-right" : "slide-left";
-  },
-
   data() {
     return {
-      montrer_bouton:true
+      montrer_bouton:true,
+      listeCitations: []
     }
+  },
+
+  async fetch() {
+    this.listeCitations = await (await this.$api.listeCitations()).json();
   },
   
   methods: {
     redirigerAjout(){
       this.$router.push('/new')
-    }
-  },
-  
-  computed: {
-    citations(){
-      /**copy array, reverse the result, concat, return result*/
-      return this.$store.state.citations.vieillesCitations
-        .slice()
-        .concat(
-          /**copy array, reverse the result*/
-          this.$store.state.citations.nouvellesCitations
-          .slice()
-        ).reverse();
     }
   }
 }
