@@ -1,8 +1,6 @@
 import citations from './model/citations';
 
-export default (request, response, next) => {
-
-  response.setHeader('Content-Type', 'application/json');
+export default (request, res, next) => {
   
   let body = ''
 
@@ -13,12 +11,18 @@ export default (request, response, next) => {
   });
 
   request.on('end', () => {
-    if (body.match("^\{\"quote\":\".+\"\}")){
+    res.setHeader('Content-Type', 'application/json');
+    let validBody = body.match("^\{\"quote\":\".+\"\}");
+    if(validBody){
       citations.ajoutCitation(JSON.parse(body).quote);
+      res.writeHead(200);
     }
-    response.end()
-    response.end(JSON.stringify(citations.getCitations()));
+    else{
+      console.log("erreur de citation; body:", body)
+      res.writeHead(400);
+    }
+    let data = JSON.stringify(citations.getCitations());
+    res.end(data);
+    next();
   });
-  
-  next();
 }

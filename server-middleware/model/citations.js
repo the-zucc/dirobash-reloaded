@@ -4,13 +4,15 @@ const fs = require('fs');
 
 class Citations {
   constructor() {
-    this.vieillesCitations = vieillesCitations
+    this.vieillesCitations = vieillesCitations.map(cit => {
+      cit.vieille=true;
+      return cit;
+    })
     this.nouvellesCitations = nouvellesCitations
   }
 
   getNextId() {
-    //TODO
-    return 1
+    return Math.max(...this.getCitations().map(quoteObj => quoteObj.id))+1;
   }
 
   ajoutCitation(citation) {
