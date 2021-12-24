@@ -7,8 +7,8 @@ class Citations {
     this.vieillesCitations = vieillesCitations.map(cit => {
       cit.vieille=true;
       return cit;
-    })
-    this.nouvellesCitations = nouvellesCitations
+    });
+    this.nouvellesCitations = nouvellesCitations;
   }
 
   getNextId() {
@@ -16,7 +16,7 @@ class Citations {
   }
 
   ajoutCitation(citation) {
-    console.log("Ajout d'une nouvelle citation:",citation)
+    console.log("Ajout d'une nouvelle citation:",citation);
     this.nouvellesCitations.push({
       id: this.getNextId(),
       quote: citation,
@@ -32,11 +32,11 @@ class Citations {
   getCitations() {
     return this.vieillesCitations.concat(
       this.nouvellesCitations
-    ).reverse()
+    ).reverse();
   }
 }
 
 const citations = new Citations();
 
-export default citations
+export default citations;
 

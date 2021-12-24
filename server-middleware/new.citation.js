@@ -12,7 +12,7 @@ export default (request, res, next) => {
 
   request.on('end', () => {
     res.setHeader('Content-Type', 'application/json');
-    let validBody = body.match("^\{\"quote\":\".+\"\}");
+    let validBody = body.match("^\{\"quote\":\".{1,10000}\"\}");
     if(validBody){
       citations.ajoutCitation(JSON.parse(body).quote);
       res.writeHead(200);
