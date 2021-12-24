@@ -8,7 +8,7 @@
           hint="Votre citation ici"
           v-model="citationUtilisateur"
         ></v-textarea>
-        <v-btn color="orange" v-on:click="addCitation(citationUtilisateur)">Ajouter une citation</v-btn>
+        <v-btn color="orange" v-on:click="ajouterCitation(citationUtilisateur)">Ajouter une citation</v-btn>
       </v-card>
     </v-col>
   </v-row>
@@ -29,9 +29,9 @@ export default {
   },
   
   methods: {
-    ...mapMutations({
-      addCitation: 'citations/addCitation'
-    })
+    ajouterCitation(citation){
+      this.$api.ajoutCitation(citation);
+    }
   }
 }
 </script>
