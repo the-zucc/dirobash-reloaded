@@ -1,5 +1,6 @@
 import vieillesCitations from '../../old-quotes.json';
 import nouvellesCitations from '../../new-quotes.json';
+import pendingQuotes from '../../pending-quotes.json';
 const fs = require('fs');
 
 class Citations {
@@ -9,23 +10,24 @@ class Citations {
       return cit;
     });
     this.nouvellesCitations = nouvellesCitations;
+    this.pendingQuotes = pendingQuotes;
   }
 
   getNextId() {
     return Math.max(...this.getCitations().map(quoteObj => quoteObj.id))+1;
   }
 
-  ajoutCitation(citation) {
+  addPendingQuote(citation) {
     console.log("Ajout d'une nouvelle citation:",citation);
-    this.nouvellesCitations.push({
+    this.pendingQuotes.push({
       id: this.getNextId(),
       quote: citation,
       date: new Date().toISOString()
     });
     fs.writeFileSync(
-      /**write to '../../new-quotes.json' */
-      './new-quotes.json',
-      JSON.stringify(this.nouvellesCitations)
+      /**write to '../../pending-quotes.json' */
+      './pending-quotes.json',
+      JSON.stringify(this.pendingQuotes)
     );
   }
 
@@ -33,6 +35,10 @@ class Citations {
     return this.vieillesCitations.concat(
       this.nouvellesCitations
     ).reverse();
+  }
+
+  getPendingQuotes() {
+    return this.pendingQuotes.reverse();
   }
 }
 

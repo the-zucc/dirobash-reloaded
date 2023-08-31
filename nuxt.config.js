@@ -39,7 +39,8 @@ export default {
 
   serverMiddleware: [
     { path: '/api/citations/list', handler: '~/server-middleware/list.citations.js' },
-    { path: '/api/citations/new', handler: '~/server-middleware/new.citation.js' }
+    { path: '/api/citations/new', handler: '~/server-middleware/new.citation.js' },
+    { path: '/api/admin/list', handler: '~/server-middleware/list.admin.js' }
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules

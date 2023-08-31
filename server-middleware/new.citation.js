@@ -14,7 +14,7 @@ export default (request, res, next) => {
     res.setHeader('Content-Type', 'application/json');
     let validBody = body.match("^\{\"quote\":\".{1,10000}\"\}");
     if(validBody){
-      citations.ajoutCitation(JSON.parse(body).quote);
+      citations.addPendingQuote(JSON.parse(body).quote);
       res.writeHead(200);
     }
     else{

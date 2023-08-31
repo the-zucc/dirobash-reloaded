@@ -13,6 +13,16 @@ class Api {
       }
     });
   }
+  async login(password) {
+    let response = await fetch('http://localhost:3000/api/admin/list', {
+      method: 'POST',
+      body: JSON.stringify({password:password}),
+      headers: {
+        'Content-Type':'application/json'
+      }
+    });
+    return await response.json();
+  }
 }
 
 const api = new Api();
