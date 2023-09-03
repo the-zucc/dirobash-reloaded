@@ -36,6 +36,7 @@ export default {
   methods: {
     ajouterCitation(citation){
       this.$api.ajoutCitation(citation);
+      this.citationUtilisateur = "";
     }
   }
 }

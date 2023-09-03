@@ -18,17 +18,49 @@ class Citations {
   }
 
   addPendingQuote(citation) {
-    console.log("Ajout d'une nouvelle citation:",citation);
     this.pendingQuotes.push({
-      id: this.getNextId(),
+      id: -1,
       quote: citation,
       date: new Date().toISOString()
     });
-    fs.writeFileSync(
-      /**write to '../../pending-quotes.json' */
-      './pending-quotes.json',
-      JSON.stringify(this.pendingQuotes)
-    );
+    this.writePendingQuotes();
+  }
+
+  approveQuote(quoteDate) {
+    let quoteIdx = this.pendingQuotes
+      .findIndex((quote) => quote.date == quoteDate);
+
+    if (quoteIdx >= 0) {
+      let quote = this.pendingQuotes[quoteIdx];
+      quote.id = this.getNextId();
+
+      // Add to new quotes
+      this.nouvellesCitations.push(quote);
+      this.writeNewQuotes();
+
+      // Remove from pending quotes
+      this.pendingQuotes.splice(quoteIdx, 1);
+      this.writePendingQuotes();
+
+      return true;
+    }
+
+    return false;
+  }
+
+  rejectQuote(quoteDate) {
+    let quoteIdx = this.pendingQuotes
+      .findIndex((quote) => quote.date == quoteDate);
+
+    if (quoteIdx >= 0) {
+      // Remove from pending quotes
+      this.pendingQuotes.splice(quoteIdx, 1);
+      this.writePendingQuotes();
+
+      return true;
+    }
+
+    return false;
   }
 
   getCitations() {
@@ -39,6 +71,24 @@ class Citations {
 
   getPendingQuotes() {
     return this.pendingQuotes.reverse();
+  }
+
+  ///
+  /// Private methods
+  ///
+
+  writePendingQuotes(){
+    fs.writeFileSync(
+      './pending-quotes.json',
+      JSON.stringify(this.pendingQuotes)
+    );
+  }
+
+  writeNewQuotes(){
+    fs.writeFileSync(
+      './new-quotes.json',
+      JSON.stringify(this.nouvellesCitations)
+    );
   }
 }
 
