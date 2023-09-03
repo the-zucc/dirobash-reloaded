@@ -77,8 +77,13 @@ export default {
         },
         {
           icon: 'mdi-comment-plus',
-          title: 'nouvelle citation',
+          title: 'Nouvelle citation',
           to: '/new'
+        },
+        {
+          icon: 'mdi-key',
+          title: 'Administration',
+          to: '/admin'
         }
       ],
       miniVariant: false,

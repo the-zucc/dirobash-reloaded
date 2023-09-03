@@ -1,14 +1,19 @@
 <template>
   <v-row>
-    <v-col class="text-center">
+    <v-col>
       <v-card>
-        <v-textarea
-          name="input-7-1"
-          label="Citation"
-          hint="Votre citation ici"
-          v-model="citationUtilisateur"
-        ></v-textarea>
-        <v-btn color="orange" v-on:click="ajouterCitation(citationUtilisateur)">Ajouter une citation</v-btn>
+        <v-card-title>Ajout d'une citation</v-card-title>
+        <v-card-text>
+          <v-textarea
+            name="input-7-1"
+            label="Citation"
+            hint="Votre citation ici"
+            v-model="citationUtilisateur"
+          ></v-textarea>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn color="orange" v-on:click="ajouterCitation(citationUtilisateur)">Soumettre</v-btn>
+        </v-card-actions>
       </v-card>
     </v-col>
   </v-row>
@@ -31,6 +36,7 @@ export default {
   methods: {
     ajouterCitation(citation){
       this.$api.ajoutCitation(citation);
+      this.citationUtilisateur = "";
     }
   }
 }

@@ -3,20 +3,21 @@
     <v-col>
       <v-card
         v-for="citation in listeCitations"
-        v-bind:key="citation.id">
+        v-bind:key="citation.id"
+        class="mb-1">
         <v-card-title class="headline">
           #{{citation.id}}
         </v-card-title>
         <v-card-text>
           <p style="white-space: pre-wrap;">{{citation.quote}}</p>
-          <small>{{citation.date + (citation.vieille ? ' - ' : '')}}<i v-if="citation.vieille">archive dirobash.tolarian.com, 2008-2020</i></small>
+          <small>{{citation.date + (citation.vieille ? ' - ' : '')}}<i v-if="citation.vieille">archive dirobash.tolarian.com, 2008&mdash;2020</i></small>
         </v-card-text>
       </v-card>
     </v-col>
     <v-fab-transition>
       <v-btn
         v-show="montrer_bouton"
-        color="pink"
+        color="orange"
         dark
         fixed
         bottom
